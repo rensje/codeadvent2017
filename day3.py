@@ -1,6 +1,10 @@
 import itertools as it
 from functools import reduce
 
+
+def addTuple(x, y):
+    return (x[0] + y[0], x[1] + y[1])
+
 def repeat_from_iter(iterator, times):
     for el in iterator:
         yield from it.repeat(el, times)
@@ -18,8 +22,6 @@ def spiral_steps(stop):
     yield from it.islice(spiral_generator(), stop)
 
 def spiral_idx(element):
-    def addTuple(x, y):
-       return (x[0] + y[0], x[1] + y[1])
     return reduce(addTuple, spiral_steps(element-1), (0,0))
 
 print(sum(abs(x) for x in spiral_idx(277678)))
@@ -35,7 +37,7 @@ def part2():
         tally = 0
         for x in neighbours:
             for y in neighbours:
-                tally += grid.get((pos[0] + x,pos[1] + y), 0)
+                tally += grid.get((pos, (x,y)), 0)
         grid[pos] = tally
         if(tally>277678):
             print(tally)
