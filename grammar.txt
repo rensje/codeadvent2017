@@ -1,0 +1,7 @@
+group : "{" [internal ("," internal)*] "}"
+
+?internal : group | garbage
+
+garbage : "<" [GARBAGE] ">"
+
+GARBAGE: /[^>]+/

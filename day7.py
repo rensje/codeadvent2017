@@ -74,7 +74,7 @@ def weight_okay(root):
         for x in weights.keys():
             if x!=weight:
                 otherweight = x
-        tower = next(enumerate(twrs))[1]
+        tower = next(iter(twrs))
         return (tower, weight, otherweight, otherweight-weight, tower.weight, tower.weight+(otherweight-weight))
 
     return True
