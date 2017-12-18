@@ -16,18 +16,23 @@ def get_scan_loc(scanner, step):
 
 def test_severity(simulation_step, packet_loc):
     if get_scan_loc(packet_loc, simulation_step)==0:
-        severity=ranges[packet_loc]*packet_loc
+        severity=1 #ranges[packet_loc]*packet_loc change to this if testing severity instead of getting caught
     else:
         severity=0
     return severity
 
 
 ranges = {int(key):int(value) for key, value in (x.replace(" ", "").split(":") for x in data.splitlines())}
-
+maxscanner = max(ranges.keys())
 def simulate(delay):
     severities = []
-    for packet_loc,simulation_step in enumerate(range(delay, max(ranges.keys())+1+delay)):
-        severities.append(test_severity(simulation_step, packet_loc))
+    for packet_loc,simulation_step in enumerate(range(delay, maxscanner+1+delay)):
+        severity = test_severity(simulation_step, packet_loc)
+        if severity>0: #remove if statement of only testing severity
+            return 1
+        severities.append(severity)
+
+
     return sum(severities)
 
 counter=-1
